@@ -1,0 +1,33 @@
+{
+  "UserCollection": {
+    "iduser": "2",
+    "email": "lauffer@outlook.com",
+    "VehicleCollection": [
+      {
+        "idvehicle": "1",
+        "description": "Carro",
+        "km": "5",
+        "average": "14", 
+        "lastsync": "20140101",
+        "GasLogCollection": [
+          {
+            "idlog": "1",
+            "date": "20140201",
+            "km": "12",
+            "quantity": "12.345",
+            "amount": "12.345",
+            "average": 1
+          },
+          {
+            "idlog": "2",
+            "date": "20150201",
+            "km": "12",
+            "quantity": "12.345",
+            "amount": "12.345",
+            "average": 1
+          }
+        ]
+      }
+    ]
+  }
+}

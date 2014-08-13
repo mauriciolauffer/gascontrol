@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<Dialog title="{i18n>LogForm}">
+		<content>
+			<VBox>
+				<Input id="idlog" type="Text" visible="false" value="{idlog}" />
+				<Label text="{i18n>Date}" />
+				<DatePicker id="date" type="Date" placeholder="{i18n>PhDate}" value="{date}" />
+				<Label text="{i18n>Kilometers}" />
+				<Input id="km" type="Number" placeholder="{i18n>PhKilometer}" value="{km}" />
+				<Label text="{i18n>Quantity} (L)" />
+				<Input id="quantity" type="Number" placeholder="{i18n>PhQuantity}" value="{quantity}" />
+				<Label text="{i18n>Amount} $" />
+				<Input id="amount" type="Number" placeholder="{i18n>PhAmount}" value="{amount}" />
+			</VBox>
+		</content>
+		<buttons>
+			<Button icon="sap-icon://save" type="Emphasized" press="handleSave" />
+			<Button icon="sap-icon://decline" press="handleCancel" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

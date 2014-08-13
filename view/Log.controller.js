@@ -1,0 +1,178 @@
+jQuery.sap.require("sap.m.MessageBox");
+jQuery.sap.require("sap.m.MessageToast");
+
+sap.ui.controller("sap.ui.mlauffer.view.Log", {
+
+/**
+* Called when a controller is instantiated and its View controls (if available) are already created.
+* Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
+* @memberOf view.Vehicle
+*/
+//	onInit: function() {
+//
+//	},
+
+/**
+* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
+* (NOT before the first rendering! onInit() is used for that one!).
+* @memberOf view.Vehicle
+*/
+//	onBeforeRendering: function() {
+//
+//	},
+
+/**
+* Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
+* This hook is the same one that SAPUI5 controls get after being rendered.
+* @memberOf view.Vehicle
+*/
+//	onAfterRendering: function() {
+//
+//	},
+
+/**
+* Called when the Controller is destroyed. Use this one to free resources and finalize activities.
+* @memberOf view.Vehicle
+*/
+//	onExit: function() {
+//
+//	}
+
+	handleNavButtonPress : function (evt) {
+		this.nav.back();
+	},
+	
+	handleItemPress : function(evt) {
+		var oContext = evt.getSource().getBindingContext();
+		if (!this.__oFormDialog) {
+			this.__oFormDialog = sap.ui.xmlfragment("LogForm", "sap.ui.mlauffer.view.LogForm", this);
+			this.getView().addDependent(this.__oFormDialog);
+		}
+		this.__oFormDialog.setBindingContext(oContext, null);
+		this.__oFormDialog.bindElement(oContext.getPath());
+		this.__oFormDialog.open();
+	},
+	
+	handleAdd : function() {
+		if (!this.__oFormDialog) {
+			this.__oFormDialog = sap.ui.xmlfragment("LogForm", "sap.ui.mlauffer.view.LogForm", this);
+			this.getView().addDependent(this.__oFormDialog);
+		}
+		this.__oFormDialog.unbindElement();
+		this.__oFormDialog.open();
+	},
+	
+	handleSave : function(evt) {
+		var oModel = sap.ui.getCore().getModel();
+		var oElements = {
+				idlog: sap.ui.core.Fragment.byId("LogForm", "idlog"),
+				date: sap.ui.core.Fragment.byId("LogForm", "date"),
+				km: sap.ui.core.Fragment.byId("LogForm", "km"),
+				quantity: sap.ui.core.Fragment.byId("LogForm", "quantity"),
+				amount: sap.ui.core.Fragment.byId("LogForm", "amount")
+		};
+		
+		//Validate form submit
+		if (this.__validateForm(oElements) === false) {
+			return;
+		}
+		
+		var nAverage = oElements.km.getValue() / oElements.quantity.getValue();
+		var oContext = evt.getSource().getBindingContext();
+		try {
+			if (oElements.idlog.getValue() != "") {
+				oModel.setProperty("date", oElements.date.getValue(), oContext);
+				oModel.setProperty("km", oElements.km.getValue(), oContext);
+				oModel.setProperty("quantity", oElements.quantity.getValue(), oContext);
+				oModel.setProperty("amount", oElements.amount.getValue(), oContext);
+				oModel.setProperty("average", nAverage, oContext);
+			} else {
+				var oEntry = {
+						idlog: $.now(),
+						date: oElements.date.getValue(),
+						km: oElements.km.getValue(),
+						quantity: oElements.quantity.getValue(),
+						amount: oElements.amount.getValue(),
+						average: nAverage
+				};
+				var sPath = oContext.getPath();
+				var sVechicle = sPath.slice( sPath.length - 1 );
+				oModel.getData().UserCollection.VehicleCollection[ sVechicle ].GasLogCollection.push( oEntry );
+			}
+		} catch (e) {
+			var sError = "Error: " + e.message;
+			sap.m.MessageToast.show(sError);
+			jQuery.sap.log.error(sError);
+			this.__closeDialog();
+			return;
+		}
+
+		// notify user
+		var bundle = this.getView().getModel("i18n").getResourceBundle();
+		sap.m.MessageToast.show(bundle.getText("MsgSuccessSave"));
+		
+		oModel.refresh(true);
+		this.__closeDialog();
+	},
+	
+	handleCancel : function() {
+		this.__closeDialog();
+	},
+	
+	handleEditVehicle : function(evt) {
+		var oVehView = sap.ui.getCore().byId("Vehicle");
+		var oVehController = oVehView.getController();
+		oVehController.handleEdit(evt);
+	},
+	
+	__closeDialog : function() {
+		this.__oFormDialog.unbindElement();
+		this.__oFormDialog.close();
+	},
+	
+	__validateForm : function(oElements) {
+		var bundle = this.getView().getModel("i18n").getResourceBundle();
+		var bValid = true;
+		//Required
+		if (!this.__validRequired(oElements.date)) bValid = false;
+		if (!this.__validRequired(oElements.km)) bValid = false;
+		if (!this.__validRequired(oElements.quantity)) bValid = false;
+		if (!this.__validRequired(oElements.amount)) bValid = false;
+		if (!bValid) {
+			sap.m.MessageToast.show(bundle.getText("ErrorRequired"));
+			return false;
+		}
+		//Number
+		if (!this.__validRequired(oElements.km)) bValid = false;
+		if (!this.__validRequired(oElements.quantity)) bValid = false;
+		if (!this.__validRequired(oElements.amount)) bValid = false;
+		if (!bValid) {
+			sap.m.MessageToast.show(bundle.getText("ErrorNumber"));
+			return false;
+		}
+		
+		return true;
+	},
+	
+	__validRequired : function(oElement) {
+		if (oElement.getValue() == "") {
+			oElement.setValueState("Error");
+			return false;
+		} else {
+			oElement.setValueState("None");
+			return true;
+		}
+	},
+	
+	__validNumber : function(oElement, bError) {
+		if (oElement.getValue() != "") {
+			if (!$.isNumeric(oElement.getValue())) {
+				oElement.setValueState("Error");
+				return false;
+			} else {
+				oElement.setValueState("None");
+				return true;
+			}
+		}
+	}
+});

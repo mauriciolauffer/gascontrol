@@ -1,0 +1,44 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:ui="sap.ca.ui" xmlns="sap.m" controllerName="sap.ui.mlauffer.view.Log">
+	<Page title="{i18n>GasLog}" showNavButton="true" navButtonPress="handleNavButtonPress">
+		<content>
+			<Table id="gaslog" noData="{i18n>noData}" items="{GasLogCollection}"
+				growing="true" growingThreshold="10" growingScrollToLoad="false">
+				<columns>
+					<Column>
+						<Text text="{i18n>Date}" />
+					</Column>
+					<Column>
+						<Text text="{i18n>Kilometers}" />
+					</Column>
+					<Column>
+						<Text text="{i18n>Quantity} (L)" />
+					</Column>
+					<Column>
+						<Label text="{i18n>Amount} $" />
+					</Column>
+					<Column>
+						<Label text="{i18n>Average} Km/L" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="handleItemPress">
+						<Text text="{date}" />
+						<ObjectNumber number="{km}" />
+						<ObjectNumber number="{quantity}" />
+						<ObjectNumber number="{amount}" />
+						<ObjectNumber number="{average}" />
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+		<footer>
+			<Bar>
+				<contentRight>
+					<Button icon="sap-icon://car-rental" press="handleEditVehicle" />
+					<Button icon="sap-icon://add" press="handleAdd" />
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+</core:View>
