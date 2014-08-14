@@ -15,37 +15,28 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 		var oModel = new sap.ui.model.json.JSONModel();
 		oModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 		
-		/*// Local Storage
-		var oStorage = oView.getController().__oWebStorage;
-		oUser = oStorage.get("user");
-		oAccount = oStorage.get("account");
-		oCategory = oStorage.get("category");
-		oTransaction = oStorage.get("transaction");
-		oDeletedItem = oStorage.get("deletedItem");
-
+		// Local Storage
+		oUser = jQuery.sap.storage(jQuery.sap.storage.Type.local).get("ui5gc-user");
+		
 		// Check Storage
-		if (oUser && oAccount && oCategory && oTransaction) {
+		if (oUser) {
 			var oData = {};
 			oData.UserCollection = oUser;
-			oData.UserCollection.AccountCollection = oAccount;
-			oData.UserCollection.CategoryCollection = oCategory;
-			oData.UserCollection.TransactionCollection = oTransaction;
 			oModel.setData(oData);
 		} else {
 			oModel.loadData(sURL);
 			oModel.attachRequestCompleted(function() {
 				console.log("attachRequestCompleted");
-				var oData = $.parseJSON( oModel.getJSON() );
-				oView.getController().__storageData("account", oData.UserCollection.AccountCollection);
-				oView.getController().__storageData("category", oData.UserCollection.CategoryCollection);
-				oView.getController().__storageData("transaction", oData.UserCollection.TransactionCollection);
-				delete oData.UserCollection.AccountCollection;
-				delete oData.UserCollection.CategoryCollection;
-				delete oData.UserCollection.TransactionCollection;
-				oView.getController().__storageData("user", oData.UserCollection);
+				// Local Storage
+				try {
+					jQuery.sap.storage(jQuery.sap.storage.Type.local).put("ui5gc-user", oModel.getData().UserCollection);
+				} catch (e) {
+					var sError = "Error: " + e.message;
+					sap.m.MessageToast.show(sError);
+					jQuery.sap.log.error(sError);
+				}
 			});
-		}*/
-		oModel.loadData(sURL);
+		}
 		
 		oView.setModel(oModel);
 		sap.ui.getCore().setModel(oModel);

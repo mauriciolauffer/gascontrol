@@ -1,6 +1,3 @@
-jQuery.sap.require("sap.m.MessageBox");
-jQuery.sap.require("sap.m.MessageToast");
-
 sap.ui.controller("sap.ui.mlauffer.view.Log", {
 
 /**
@@ -99,6 +96,9 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 				var sVechicle = sPath.slice( sPath.length - 1 );
 				oModel.getData().UserCollection.VehicleCollection[ sVechicle ].GasLogCollection.push( oEntry );
 			}
+			// Local Storage
+			jQuery.sap.storage(jQuery.sap.storage.Type.local).put("ui5gc-user", oModel.getData().UserCollection);
+			
 		} catch (e) {
 			var sError = "Error: " + e.message;
 			sap.m.MessageToast.show(sError);
@@ -133,6 +133,14 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 	__validateForm : function(oElements) {
 		var bundle = this.getView().getModel("i18n").getResourceBundle();
 		var bValid = true;
+		//Number
+		if (!this.__validRequired(oElements.km)) bValid = false;
+		if (!this.__validRequired(oElements.quantity)) bValid = false;
+		if (!this.__validRequired(oElements.amount)) bValid = false;
+		if (!bValid) {
+			sap.m.MessageToast.show(bundle.getText("ErrorNumber"));
+			return false;
+		}
 		//Required
 		if (!this.__validRequired(oElements.date)) bValid = false;
 		if (!this.__validRequired(oElements.km)) bValid = false;
@@ -140,14 +148,6 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 		if (!this.__validRequired(oElements.amount)) bValid = false;
 		if (!bValid) {
 			sap.m.MessageToast.show(bundle.getText("ErrorRequired"));
-			return false;
-		}
-		//Number
-		if (!this.__validRequired(oElements.km)) bValid = false;
-		if (!this.__validRequired(oElements.quantity)) bValid = false;
-		if (!this.__validRequired(oElements.amount)) bValid = false;
-		if (!bValid) {
-			sap.m.MessageToast.show(bundle.getText("ErrorNumber"));
 			return false;
 		}
 		

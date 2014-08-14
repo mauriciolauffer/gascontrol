@@ -28,9 +28,9 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 	 * 
 	 * @memberOf view.Vehicle
 	 */
-	// onAfterRendering: function() {
-	//
-	// },
+	 //onAfterRendering: function() {
+	 //
+	 //},
 	/**
 	 * Called when the Controller is destroyed. Use this one to free resources
 	 * and finalize activities.
@@ -45,9 +45,9 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 		this.nav.to("Log", oContext);
 	},
 
-	handleAdd : function() {
+	handleAdd : function(evt) {
 		if (!this.__oFormDialog) {
-			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleFormx", this);
+			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
 		this.__oFormDialog.unbindElement();
@@ -57,7 +57,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 	handleEdit : function(evt) {
 		var oContext = evt.getSource().getBindingContext();
 		if (!this.__oFormDialog) {
-			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleFormx", this);
+			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
 		this.__oFormDialog.setBindingContext(oContext, null);
@@ -88,6 +88,9 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 				};
 				oModel.getData().UserCollection.VehicleCollection.push( oEntry );
 			}
+			// Local Storage
+			jQuery.sap.storage(jQuery.sap.storage.Type.local).put("ui5gc-user", oModel.getData().UserCollection);
+			
 		} catch (e) {
 			var sError = "Error: " + e.message;
 			sap.m.MessageToast.show(sError);

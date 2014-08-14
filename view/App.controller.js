@@ -68,19 +68,6 @@ sap.ui.controller("sap.ui.mlauffer.view.App", {
 	back : function(pageId) {
 		// this.getView().app.backToPage(pageId);
 		this.getView().app.back();
-	},
-	
-	__oWebStorage : jQuery.sap.storage(jQuery.sap.storage.Type.local),
-
-	__storageData : function(sId, sData) {
-		// Storage
-		try {
-			this.__oWebStorage.put(sId, sData);
-		} catch (e) {
-			var sError = "Error: " + e.message;
-			sap.m.MessageToast.show(sError);
-			jQuery.sap.log.error(sError);
-		}
 	}
 
 });

@@ -31,10 +31,10 @@ sap.ui.jsview("sap.ui.mlauffer.view.App", {
 		oPage = new sap.ui.xmlview("Log", "sap.ui.mlauffer.view.Log");
 		oPage.getController().nav = this.getController();
 		this.app.addPage(oPage);
-		/*oPage = new sap.ui.xmlview("User", "sap.ui.mlauffer.view.User");
-		oPage.getController().nav = this.getController();
-		this.app.addPage(oPage);*/
-		
+		//oPage = new sap.ui.xmlview("test", "sap.ui.mlauffer.view.test");
+		//oPage.getController().nav = this.getController();
+		//this.app.addPage(oPage);
+
 		this.app.setInitialPage("Vehicle");
 
 		// wrap app with shell
