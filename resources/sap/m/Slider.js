@@ -34,7 +34,7 @@ sap.m.Slider.prototype.onsapend=function(e){e.setMarked();var m=this.getMax();e.
 sap.m.Slider.prototype.onsaptabnext=function(){this._fInitialFocusValue=this.getValue()};
 sap.m.Slider.prototype.onsaptabprevious=function(){this._fInitialFocusValue=this.getValue()};
 sap.m.Slider.prototype.onsapescape=function(){this.setValue(this._fInitialFocusValue)};
-sap.m.Slider.prototype.getFocusDomRef=function(){return this.getDomRef()?this._$Handle[0]:null};
+sap.m.Slider.prototype.getFocusDomRef=function(){return this.getDomRef("handle")};
 sap.m.Slider.prototype.stepUp=function(s){return this.setValue(this.getValue()+(this._validateStep(s)*this.getStep()))};
 sap.m.Slider.prototype.stepDown=function(s){return this.setValue(this.getValue()-(this._validateStep(s)*this.getStep()))};
 sap.m.Slider.prototype.setValue=function(n){this.setValue=this._setValue;return this.setProperty("value",n,true)};

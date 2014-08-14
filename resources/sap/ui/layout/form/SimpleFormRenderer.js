@@ -4,4 +4,4 @@
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 jQuery.sap.declare("sap.ui.layout.form.SimpleFormRenderer");sap.ui.layout.form.SimpleFormRenderer={};
-sap.ui.layout.form.SimpleFormRenderer.render=function(r,c){r.write("<div");r.writeControlData(c);r.addClass("sapUiSimpleForm");r.writeClasses();r.write(">");var f=c.getAggregation("form");r.renderControl(f);r.write("</div>")};
+sap.ui.layout.form.SimpleFormRenderer.render=function(r,c){c._bChangedByMe=true;r.write("<div");r.writeControlData(c);r.addClass("sapUiSimpleForm");r.writeClasses();r.write(">");var f=c.getAggregation("form");r.renderControl(f);r.write("</div>");c._bChangedByMe=false};

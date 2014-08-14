@@ -9,3 +9,5 @@ sap.m.TablePersoProvider.prototype.getPersData=function(){jQuery.sap.log.debug("
 sap.m.TablePersoProvider.prototype.setPersData=function(b){jQuery.sap.log.debug("TablePersoProvider setPersData")};
 sap.m.TablePersoProvider.prototype.delPersData=function(){jQuery.sap.log.debug("TablePersoProvider delPersData")};
 sap.m.TablePersoProvider.prototype.getCaption=function(c){return null};
+sap.m.TablePersoProvider.prototype.getGroup=function(c){return null};
+sap.m.TablePersoProvider.prototype.resetPersData=function(){jQuery.sap.log.debug("TablePersoProvider resetPersData")};
