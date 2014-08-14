@@ -18,7 +18,7 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 		oModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
 		
 		// Local Storage
-		/*oUser = jQuery.sap.storage(jQuery.sap.storage.Type.local).get("ui5gc-user");
+		oUser = jQuery.sap.storage(jQuery.sap.storage.Type.local).get("ui5gc-user");
 		
 		// Check Storage
 		if (oUser) {
@@ -38,7 +38,7 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 					jQuery.sap.log.error(sError);
 				}
 			});
-		}*/
+		}
 		
 		oView.setModel(oModel);
 		sap.ui.getCore().setModel(oModel);

@@ -25,7 +25,7 @@ sap.ui.jsview("sap.ui.mlauffer.view.App", {
 		this.app = new sap.m.App("GasControl");
 
 		// Create pages
-		/*var oPage = new sap.ui.xmlview("Vehicle", "sap.ui.mlauffer.view.Vehicle");
+		var oPage = new sap.ui.xmlview("Vehicle", "sap.ui.mlauffer.view.Vehicle");
 		oPage.getController().nav = this.getController();
 		this.app.addPage(oPage);
 		oPage = new sap.ui.xmlview("Log", "sap.ui.mlauffer.view.Log");
@@ -35,7 +35,7 @@ sap.ui.jsview("sap.ui.mlauffer.view.App", {
 		//oPage.getController().nav = this.getController();
 		//this.app.addPage(oPage);
 
-		this.app.setInitialPage("Vehicle");*/
+		this.app.setInitialPage("Vehicle");
 
 		// wrap app with shell
 		return new sap.m.Shell("Shell", {
