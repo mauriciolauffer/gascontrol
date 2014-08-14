@@ -1,0 +1,23 @@
+CACHE MANIFEST
+# v 1.0 2014-08-13
+
+CACHE:
+#./resources/sap-ui-core.js
+#./resources/jquery.sap.storage.js
+#./view/Log.view.xml
+#./view/LogForm.fragment.xml
+#./view/Vehicle.view.xml
+#./view/VehicleForm.fragment.xml
+#./view/App.view.js
+#./view/App.controller.js
+#./view/Log.controller.js
+#./view/Vehicle.controller.js
+#./i18n/messageBundle.properties
+#./i18n/messageBundle_pt.properties
+#./model/mock.json
+#./Component.js
+#./phonegap.js
+
+
+NETWORK:
+*
