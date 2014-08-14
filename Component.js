@@ -1,5 +1,7 @@
 jQuery.sap.declare("sap.ui.mlauffer.Component");
 jQuery.sap.require("jquery.sap.storage");
+jQuery.sap.require("sap.m.MessageBox");
+jQuery.sap.require("sap.m.MessageToast");
 
 sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 
