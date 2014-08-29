@@ -82,7 +82,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 				var oEntry = {
 						idvehicle: $.now(),
 						description: oElements.description.getValue(),
-						km: 0,
+						kmTotal: 0,
 						average: 0,
 						GasLogCollection: []
 				};

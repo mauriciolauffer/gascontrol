@@ -18,7 +18,7 @@
 				<items>
 					<ColumnListItem type="Navigation" press="handleItemPress">
 						<Text text="{description}" />
-						<ObjectNumber number="{km}" />
+						<ObjectNumber number="{kmTotal}" />
 						<ObjectNumber number="{average}" />
 					</ColumnListItem>
 				</items>

@@ -38,10 +38,17 @@ sap.ui.jsview("sap.ui.mlauffer.view.App", {
 		this.app.setInitialPage("Vehicle");
 
 		// wrap app with shell
-		return new sap.m.Shell("Shell", {
+		return new sap.m.Shell({
 			title : "{i18n>ShellTitle}",
 			showLogout : false,
 			app : this.app
+			/*homeIcon : { 'phone':'phone-icon_57x57.png', 
+				'phone@2':'phone-retina_114x114.png', 
+				'tablet':'tablet-icon_72x72.png', 
+				'tablet@2':'tablet-retina_144x144.png', 
+				'precomposed':true, 
+				'favicon':'favicon.ico'
+			}*/
 		});
 	}
 

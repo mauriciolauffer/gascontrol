@@ -4,6 +4,23 @@ jQuery.sap.require("sap.m.MessageBox");
 jQuery.sap.require("sap.m.MessageToast");
 
 sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
+	
+	metadata : {
+		includes : [],  // css, javascript files that should be used in the component
+        dependencies : { // external dependencies
+            libs : ["sap.m"], // the libraries that you component will be using
+            components : [], // the components that your component will use
+        },
+        config : {
+        	"resourceBundle" : "./i18n/messageBundle.properties",
+        	"titleResource" : "ShellTitle",
+        	//"favIcon" : "img/favicon.ico",
+        	"homeScreenIconPhone" : "./img/gascontrolui5_57p.png",
+        	"homeScreenIconPhone@2" : "./img/gascontrolui5_114p.png",
+        	"homeScreenIconTablet" : "./img/gascontrolui5_72p.png",
+        	"homeScreenIconTablet@2" : "./img/gascontrolui5_144p.png",
+        }
+	},
 
 	createContent : function() {
 		var oView = new sap.ui.view({
@@ -41,7 +58,7 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 		}
 		
 		oView.setModel(oModel);
-		sap.ui.getCore().setModel(oModel);
+		//sap.ui.getCore().setModel(oModel);
 		
 		// set i18n model
 		var i18nModel = new sap.ui.model.resource.ResourceModel({

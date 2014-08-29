@@ -23,9 +23,12 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 * This hook is the same one that SAPUI5 controls get after being rendered.
 * @memberOf view.Vehicle
 */
-//	onAfterRendering: function() {
-//
-//	},
+	/*onAfterRendering: function(evt) {
+		 var context = evt.getSource().getBindingContext();
+		 var context = this.getView().getModel();
+		 console.dir(context);
+		 console.dir(evt);
+	},*/
 
 /**
 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
