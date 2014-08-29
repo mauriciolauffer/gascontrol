@@ -42,7 +42,10 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 			var oData = {};
 			oData.UserCollection = oUser;
 			oModel.setData(oData);
+			console.log(1);
+			console.log(oData);
 		} else {
+			console.log(2);
 			oModel.loadData(sURL);
 			oModel.attachRequestCompleted(function() {
 				console.log("attachRequestCompleted");
@@ -58,7 +61,7 @@ sap.ui.core.UIComponent.extend("sap.ui.mlauffer.Component", {
 		}
 		
 		oView.setModel(oModel);
-		//sap.ui.getCore().setModel(oModel);
+		sap.ui.getCore().setModel(oModel);
 		
 		// set i18n model
 		var i18nModel = new sap.ui.model.resource.ResourceModel({
