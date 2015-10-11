@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html manifest="gascontrolui5.appcache">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name="author" content="Mauricio Lauffer">
 <title>Gas Control (UI5)</title>
 </head>
-<body class="sapUiBody" role="application">
-	<div id="content"></div>
+<body class="sapUiBody" id="content">
 </body>
 <script type="text/javascript" src="./js/spin.min.js"></script>
 <script type="text/javascript">
 	var oSpinner = new Spinner().spin(document.getElementById('content'));
 </script>
 <script type="text/javascript" src="./resources/sap-ui-core.js"
-	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m"
+	id="sap-ui-bootstrap" data-sap-ui-libs="sap.m, sap.ca.ui"
 	data-sap-ui-theme="sap_bluecrystal"
 	data-sap-ui-xx-bindingSyntax="complex"
 	data-sap-ui-resourceroots='{
 				"sap.ui.mlauffer": "./"
 			}'></script>
-<script type="text/javascript" src="./phonegap.js"></script>
+<script type="text/javascript" src="./cordova.js"></script>
 <script type="text/javascript">
 	new sap.ui.core.ComponentContainer({
 		name : "sap.ui.mlauffer"

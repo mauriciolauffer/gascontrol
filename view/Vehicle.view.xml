@@ -2,25 +2,12 @@
 	xmlns="sap.m" controllerName="sap.ui.mlauffer.view.Vehicle">
 	<Page title="{i18n>VehicleTitle}">
 		<content>
-			<List id="vehicles" noData="{i18n>noData}" items="{/UserCollection/VehicleCollection}"
-				growing="true" growingThreshold="10" growingScrollToLoad="false">
-				<columns>
-					<Column>
-						<Text text="{i18n>Description}" />
-					</Column>
-					<Column visible="false">
-						<Text text="{i18n>Kilometers}" />
-					</Column>
-					<Column visible="false">
-						<Text text="{i18n>Average} Km/L" />
-					</Column>
-				</columns>
+			<SearchField id="searchField" showRefreshButton="{device>/isNoTouch}"
+				search="onSearch" width="100%" />
+			<List id="vehicles" noData="{i18n>noData}" items="{/UserCollection/VehicleCollection}">
 				<items>
-					<ColumnListItem type="Navigation" press="handleItemPress">
-						<Text text="{description}" />
-						<ObjectNumber number="{kmTotal}" />
-						<ObjectNumber number="{average}" />
-					</ColumnListItem>
+					<StandardListItem type="Navigation" press="handleItemPress"
+						title="{description}" info="{plate}" />
 				</items>
 			</List>
 		</content>

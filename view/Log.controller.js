@@ -1,3 +1,5 @@
+jQuery.sap.require("sap.ui.mlauffer.util.Formatter");
+
 sap.ui.controller("sap.ui.mlauffer.view.Log", {
 
 /**
@@ -48,6 +50,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 			this.__oFormDialog = sap.ui.xmlfragment("LogForm", "sap.ui.mlauffer.view.LogForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
+		sap.ui.core.Fragment.byId("LogForm", "delete").setVisible(true);
 		this.__oFormDialog.setBindingContext(oContext, null);
 		this.__oFormDialog.bindElement(oContext.getPath());
 		this.__oFormDialog.open();
@@ -58,6 +61,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 			this.__oFormDialog = sap.ui.xmlfragment("LogForm", "sap.ui.mlauffer.view.LogForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
+		sap.ui.core.Fragment.byId("LogForm", "delete").setVisible(true);
 		this.__oFormDialog.unbindElement();
 		this.__oFormDialog.open();
 	},
@@ -82,18 +86,18 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 		try {
 			if (oElements.idlog.getValue() != "") {
 				oModel.setProperty("date", oElements.date.getValue(), oContext);
-				oModel.setProperty("km", oElements.km.getValue(), oContext);
-				oModel.setProperty("quantity", oElements.quantity.getValue(), oContext);
-				oModel.setProperty("amount", oElements.amount.getValue(), oContext);
-				oModel.setProperty("average", nAverage, oContext);
+				oModel.setProperty("km", sap.ui.mlauffer.util.Formatter.decimals(oElements.km.getValue()), oContext);
+				oModel.setProperty("quantity", sap.ui.mlauffer.util.Formatter.decimals(oElements.quantity.getValue()), oContext);
+				oModel.setProperty("amount", sap.ui.mlauffer.util.Formatter.decimals(oElements.amount.getValue()), oContext);
+				oModel.setProperty("average", sap.ui.mlauffer.util.Formatter.decimals(nAverage), oContext);
 			} else {
 				var oEntry = {
 						idlog: $.now(),
 						date: oElements.date.getValue(),
-						km: oElements.km.getValue(),
-						quantity: oElements.quantity.getValue(),
-						amount: oElements.amount.getValue(),
-						average: nAverage
+						km: sap.ui.mlauffer.util.Formatter.decimals(oElements.km.getValue()),
+						quantity: sap.ui.mlauffer.util.Formatter.decimals(oElements.quantity.getValue()),
+						amount: sap.ui.mlauffer.util.Formatter.decimals(oElements.amount.getValue()),
+						average: sap.ui.mlauffer.util.Formatter.decimals(nAverage)
 				};
 				var sPath = oContext.getPath();
 				var sVechicle = sPath.slice( sPath.length - 1 );
@@ -115,6 +119,36 @@ sap.ui.controller("sap.ui.mlauffer.view.Log", {
 		sap.m.MessageToast.show(bundle.getText("MsgSuccessSave"));
 		
 		oModel.refresh(true);
+		this.__closeDialog();
+	},
+	
+	handleDelete : function(evt) {
+		var context = evt.getSource().getBindingContext();
+		var that = this;
+		var bundle = this.getView().getModel("i18n").getResourceBundle();
+		
+		// show confirmation dialog
+		sap.m.MessageBox.confirm(bundle.getText("DialogMsgDelete"), function(oAction) {
+			if (sap.m.MessageBox.Action.OK === oAction) {
+				var oModel = that.getView().getModel();
+				var sPath = context.getPath();
+				
+				try {
+					//Delete
+					oModel.getData().UserCollection.VehicleCollection[sPath.slice(34).substring(0,1)].GasLogCollection.splice(sPath.slice(sPath.lastIndexOf("/") + 1), 1);
+				} catch (e) {
+					var sError = "Error: " + e.message;
+					sap.m.MessageToast.show(sError);
+					return;
+				}
+				
+				// notify user
+				sap.m.MessageToast.show(bundle.getText("MsgSuccessDelete"));
+				// Local Storage
+				jQuery.sap.storage(jQuery.sap.storage.Type.local).put("ui5gc-user", oModel.getData().UserCollection);
+				oModel.refresh(true);
+			}
+		}, bundle.getText("DialogTitleDelete"));
 		this.__closeDialog();
 	},
 	

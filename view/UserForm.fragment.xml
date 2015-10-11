@@ -6,14 +6,10 @@
 				<Label text="{i18n>Description}" />
 				<Input id="description" type="Text" placeholder="{i18n>PhDescription}"
 					value="{description}" />
-				<Label text="{i18n>Plate}" />
-				<Input id="plate" type="Text" placeholder="{i18n>PhPlate}"
-					value="{plate}" />
 			</VBox>
 		</content>
 		<buttons>
 			<Button icon="sap-icon://save" type="Emphasized" press="handleSave" />
-			<Button id="delete" icon="sap-icon://delete" press="handleDelete" />
 			<Button icon="sap-icon://decline" press="handleCancel" />
 		</buttons>
 	</Dialog>

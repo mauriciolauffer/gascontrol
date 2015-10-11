@@ -1,6 +1,6 @@
 <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:ui="sap.ca.ui" xmlns="sap.m" controllerName="sap.ui.mlauffer.view.Log">
-	<Page title="{i18n>Log} - {description}" showNavButton="true" navButtonPress="handleNavButtonPress">
+	<Page title="{description} : {plate}">
 		<content>
 			<Table id="gaslog" noData="{i18n>noData}" items="{GasLogCollection}"
 				growing="true" growingThreshold="10" growingScrollToLoad="false">

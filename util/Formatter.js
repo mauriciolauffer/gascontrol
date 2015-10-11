@@ -19,6 +19,14 @@ sap.ui.mlauffer.util.Formatter = {
 		return (value < 0) ? "Error" : "Success";
 	},
 
+	decimals : function(value) {
+		try {
+			return (value) ? parseFloat(value).toFixed(2) : value;
+		} catch (err) {
+			return "Not-A-Number";
+		}
+	},
+	
 	quantity : function(value) {
 		try {
 			return (value) ? parseFloat(value).toFixed(0) : value;

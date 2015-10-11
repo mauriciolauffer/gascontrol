@@ -50,6 +50,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
+		sap.ui.core.Fragment.byId("VehicleForm", "delete").setVisible(false);
 		this.__oFormDialog.unbindElement();
 		this.__oFormDialog.open();
 	},
@@ -60,6 +61,7 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 			this.__oFormDialog = sap.ui.xmlfragment("VehicleForm", "sap.ui.mlauffer.view.VehicleForm", this);
 			this.getView().addDependent(this.__oFormDialog);
 		}
+		sap.ui.core.Fragment.byId("VehicleForm", "delete").setVisible(true);
 		this.__oFormDialog.setBindingContext(oContext, null);
 		this.__oFormDialog.bindElement(oContext.getPath());
 		this.__oFormDialog.open();
@@ -68,7 +70,8 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 	handleSave : function(evt) {
 		var oModel = sap.ui.getCore().getModel();
 		var oElements = {
-				description: sap.ui.core.Fragment.byId("VehicleForm", "description")
+				description: sap.ui.core.Fragment.byId("VehicleForm", "description"),
+				plate: sap.ui.core.Fragment.byId("VehicleForm", "plate")
 		};
 		//Validate form submit
 		if (this.__validateForm(oElements) === false) {
@@ -78,10 +81,12 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 		try {
 			if (oContext) {
 				oModel.setProperty("description", oElements.description.getValue(), oContext);
+				oModel.setProperty("plate", oElements.plate.getValue(), oContext);
 			} else {
 				var oEntry = {
 						idvehicle: $.now(),
 						description: oElements.description.getValue(),
+						plate: oElements.plate.getValue(),
 						kmTotal: 0,
 						average: 0,
 						GasLogCollection: []
@@ -107,8 +112,58 @@ sap.ui.controller("sap.ui.mlauffer.view.Vehicle", {
 		this.__closeDialog();
 	},
 	
+	handleDelete : function(evt) {
+		var context = evt.getSource().getBindingContext();
+		var that = this;
+		var bundle = this.getView().getModel("i18n").getResourceBundle();
+		
+		// show confirmation dialog
+		sap.m.MessageBox.confirm(bundle.getText("DialogMsgDelete"), function(oAction) {
+			if (sap.m.MessageBox.Action.OK === oAction) {				
+				var oModel = that.getView().getModel();
+				//var oData = oModel.getData();
+				var sPath = context.getPath();
+				//var aVehicle = oData.UserCollection.VehicleCollection;
+				
+				try {
+					oModel.getData().UserCollection.VehicleCollection.splice(sPath.slice(sPath.lastIndexOf("/") + 1), 1);
+					/*delete aVehicle[ sPath.slice(sPath.lastIndexOf("/") + 1) ];
+					oData.UserCollection.VehicleCollection = [];
+					aVehicle.forEach(function(oValue, i) {
+						oData.UserCollection.VehicleCollection.push(oValue);
+					});*/
+				} catch (e) {
+					var sError = "Error: " + e.message;
+					sap.m.MessageToast.show(sError);
+					//jQuery.sap.log.error(sError);
+					return;
+				}
+				
+				// notify user
+				sap.m.MessageToast.show(bundle.getText("MsgSuccessDelete"));
+				// Local Storage
+				jQuery.sap.storage(jQuery.sap.storage.Type.local).put("ui5gc-user", oModel.getData().UserCollection);
+				oModel.refresh(true);
+			}
+		}, bundle.getText("DialogTitleDelete"));
+		this.__closeDialog();
+	},
+	
 	handleCancel : function() {
 		this.__closeDialog();
+	},
+	
+	onSearch : function() {
+		// add filter for search
+		var filters = [];
+		var searchString = this.getView().byId("searchField").getValue();
+		if (searchString && searchString.length > 0) {
+			filters = [ new sap.ui.model.Filter("description",
+					sap.ui.model.FilterOperator.Contains, searchString) ];
+		}
+
+		// update list binding
+		this.getView().byId("vehicles").getBinding("items").filter(filters);
 	},
 	
 	__closeDialog : function() {

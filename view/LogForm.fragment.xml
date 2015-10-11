@@ -5,7 +5,7 @@
 			<VBox>
 				<Input id="idlog" type="Text" visible="false" value="{idlog}" />
 				<Label text="{i18n>Date}" />
-				<DatePicker id="date" type="Date" placeholder="{i18n>PhDate}" value="{date}" />
+				<DatePicker id="date" placeholder="{i18n>PhDate}" value="{date}" />
 				<Label text="{i18n>Kilometers}" />
 				<Input id="km" type="Number" placeholder="{i18n>PhKilometer}" value="{km}" />
 				<Label text="{i18n>Quantity} (L)" />
@@ -16,6 +16,7 @@
 		</content>
 		<buttons>
 			<Button icon="sap-icon://save" type="Emphasized" press="handleSave" />
+			<Button id="delete" icon="sap-icon://delete" press="handleDelete" />
 			<Button icon="sap-icon://decline" press="handleCancel" />
 		</buttons>
 	</Dialog>

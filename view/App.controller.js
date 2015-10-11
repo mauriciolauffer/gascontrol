@@ -37,9 +37,9 @@ sap.ui.controller("sap.ui.mlauffer.view.App", {
 	 * 
 	 * @memberOf view.App
 	 */
-	onExit : function() {
-		alert("leaving app... bye!");
-	},
+	//onExit : function() {
+		//alert("leaving app... bye!");
+	//},
 	/**
 	 * Navigates to another page
 	 * 
